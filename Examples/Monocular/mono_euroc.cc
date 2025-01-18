@@ -24,6 +24,7 @@
 #include<opencv2/core/core.hpp>
 
 #include<System.h>
+#include <Anchor.h>
 
 using namespace std;
 
@@ -80,14 +81,40 @@ int main(int argc, char **argv)
     int fps = 20;
     float dT = 1.f/fps;
     // Create SLAM system. It initializes all system threads and gets ready to process frames.
-    ORB_SLAM3::System SLAM(argv[1],argv[2],ORB_SLAM3::System::MONOCULAR, false);
+    ORB_SLAM3::System SLAM(argv[1],argv[2],ORB_SLAM3::System::MONOCULAR, true);
     float imageScale = SLAM.GetImageScale();
 
     double t_resize = 0.f;
     double t_track = 0.f;
 
+
+
+
+
+
+
+
+
+
+
+
+    int k=0;
+    ORB_SLAM3::Anchor* te;
+    std::vector<Eigen::Vector3f> pp;
+   long unsigned int mpid = 0;
+
+
+
+
+
+
+
+
+
+
     for (seq = 0; seq<num_seq; seq++)
     {
+        
 
         // Main loop
         cv::Mat im;
@@ -135,9 +162,73 @@ int main(int argc, char **argv)
             std::chrono::monotonic_clock::time_point t1 = std::chrono::monotonic_clock::now();
     #endif
 
+
+
+
+k++;
+
+std::cout << "k = " << k << std::endl;
+
+
+
+
             // Pass the image to the SLAM system
             // cout << "tframe = " << tframe << endl;
             SLAM.TrackMonocular(im,tframe); // TODO change to monocular_inertial
+
+
+
+
+
+
+
+
+
+
+
+		
+                std::cout << "k = " << k << std::endl;
+                if(k==5)
+                {
+                Eigen::Vector3f pos(1.0f, 2.0f, 3.0f);
+                Eigen::Vector3f ori(1.0f, 2.0f, 3.0f);
+
+              te= SLAM.getAtlas()->GetCurrentMap()->createAnchor(&pos,&ori);
+                
+                }
+
+
+                
+                if(k>6){
+                    te->update(mpid,pp);
+                    
+                }
+
+
+
+                                if(k>5){
+                    pp=te->getRefPositions();
+                    mpid=SLAM.getAtlas()->GetCurrentMap()->GetId();
+                }
+
+                
+            
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     #ifdef COMPILEDWITHC11
             std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();

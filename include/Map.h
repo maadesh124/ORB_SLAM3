@@ -20,6 +20,7 @@
 #ifndef MAP_H
 #define MAP_H
 
+#include "Anchor.h"
 #include "MapPoint.h"
 #include "KeyFrame.h"
 
@@ -37,6 +38,7 @@ class MapPoint;
 class KeyFrame;
 class Atlas;
 class KeyFrameDatabase;
+class Anchor;
 
 class Map
 {
@@ -68,10 +70,14 @@ class Map
     }
 
 public:
+     
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
     Map();
     Map(int initKFid);
     ~Map();
+        std::vector<Anchor*> anchors;
+        Anchor* createAnchor(Eigen::Vector3f* pos,Eigen::Vector3f* orientation);
+	    std::vector<MapPoint*> selectReferences(Eigen::Vector3f* pos);
 
     void AddKeyFrame(KeyFrame* pKF);
     void AddMapPoint(MapPoint* pMP);
@@ -84,7 +90,7 @@ public:
     std::vector<KeyFrame*> GetAllKeyFrames();
     std::vector<MapPoint*> GetAllMapPoints();
     std::vector<MapPoint*> GetReferenceMapPoints();
-
+    
     long unsigned int MapPointsInMap();
     long unsigned  KeyFramesInMap();
 
@@ -154,6 +160,7 @@ public:
     // DEBUG: show KFs which are used in LBA
     std::set<long unsigned int> msOptKFs;
     std::set<long unsigned int> msFixedKFs;
+
 
 protected:
 

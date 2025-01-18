@@ -26,6 +26,27 @@ namespace ORB_SLAM3
 
 long unsigned int Map::nNextId=0;
 
+Anchor* Map::createAnchor(Eigen::Vector3f* pos,Eigen::Vector3f* orientation){
+    Anchor* anchor=new Anchor();
+    anchor->pos=*pos;
+    anchor->ori=*orientation;
+    anchor->map=this;
+    anchors.push_back(anchor);
+    anchor->refs=selectReferences(pos);
+    std::cout<<" Anchor created successfully at "<<anchor->pos[0]<<anchor->pos[1]<<anchor->pos[2]<<endl;
+    for(MapPoint* mp:anchor->refs)
+    cout<<"ref "<<mp->GetWorldPos()[0];
+    
+    return anchor;
+}
+
+std::vector<MapPoint*> Map::selectReferences(Eigen::Vector3f* pos){
+  std::vector<MapPoint*> v=  this->GetAllMapPoints();
+  if(v.size()>5)
+  v.resize(5);
+  return v;
+}
+
 Map::Map():mnMaxKFid(0),mnBigChangeIdx(0), mbImuInitialized(false), mnMapChange(0), mpFirstRegionKF(static_cast<KeyFrame*>(NULL)),
 mbFail(false), mIsInUse(false), mHasTumbnail(false), mbBad(false), mnMapChangeNotified(0), mbIsInertial(false), mbIMU_BA1(false), mbIMU_BA2(false)
 {
