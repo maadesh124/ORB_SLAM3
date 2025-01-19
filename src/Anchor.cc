@@ -63,11 +63,18 @@ Eigen::Matrix3f Anchor::solveOrthogonalProcrustes(const std::vector<Eigen::Vecto
 }
 
 Eigen::Vector3f Anchor::update(long unsigned int mapId){
+
+if(this->prevRefPos.size()==0)
+return this->pos;
+
 if(mapId!=this->map->GetId())
 return this->pos;
 
 if(this->prevRefPos.size()!=this->refs.size())
 std::cerr<<"No. of refs varies"<<endl;
+
+std::vector<Eigen::Vector3f> alignment;
+std::vector<Eigen::Vector3f> curPos;
 
 int i=0;
 double wi=1,swi=0;
@@ -78,20 +85,31 @@ for(Eigen::Vector3f pp:this->prevRefPos){
     Eigen::Vector3f ci=pp-this->pos-cp;
     c=c+(wi*ci);
     swi=swi+wi;
+
+    alignment.push_back(this->ori*pp.normalized());
+    curPos.push_back(this->refs.at(i)->GetWorldPos().normalized());
+
     i++;
+
+
 }
+Eigen::Matrix3f R=solveOrthogonalProcrustes(curPos,alignment);
 this->pos=-1*c/swi;
+std::cout<<"Old R"<<this->ori<<std::endl;
+std::cout<<"Solved"<<R<<std::endl;
+this->ori.row(0)=R.row(0).normalized();
+this->ori.row(1)=R.row(1).normalized();
+this->ori.row(2)=R.row(2).normalized();
 
+ cout<<"Anchor pos="<<this->pos[0]<<","<<this->pos[1]<<","<<this->pos[2]<<std::endl;
+//  i=0;
+// for(Eigen::Vector3f pp:this->prevRefPos){
 
-cout<<"Anchor pos="<<this->pos[0]<<","<<this->pos[1]<<","<<this->pos[2]<<std::endl;
- i=0;
-for(Eigen::Vector3f pp:this->prevRefPos){
-
-    Eigen::Vector3f cp=this->refs.at(i)->GetWorldPos();
+//     Eigen::Vector3f cp=this->refs.at(i)->GetWorldPos();
     
-    std::cout<<"Prev pos="<<pp[0]<<","<<pp[1]<<","<<pp[2]<<" Current POs="<<cp[0]<<","<<cp[1]<<","<<cp[2]<<std::endl;
-    i++;
-}
+//     std::cout<<"Prev pos="<<pp[0]<<","<<pp[1]<<","<<pp[2]<<" Current POs="<<cp[0]<<","<<cp[1]<<","<<cp[2]<<std::endl;
+//     i++;
+// }
 
 
 return this->pos;

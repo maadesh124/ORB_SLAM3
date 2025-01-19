@@ -199,18 +199,18 @@ std::cout << "k = " << k << std::endl;
 
 
                 
-                if(k>6){
-                    te->update1(mpid);
-                    //std::cout<<"matrix"<<te->computeAffineTransformation()<<std::endl;
+                // if(k>5){
+                //     te->update(mpid);
                     
-                }
+                    
+                // }
 
 
 
-                                if(k>5){
-                    te->prevRefPos=te->getRefPositions();
-                    mpid=SLAM.getAtlas()->GetCurrentMap()->GetId();
-                }
+                //                 if(k>5){
+                //     te->prevRefPos=te->getRefPositions();
+                //     mpid=SLAM.getAtlas()->GetCurrentMap()->GetId();
+                // }
 
                 if(k==100)
                 return 0;

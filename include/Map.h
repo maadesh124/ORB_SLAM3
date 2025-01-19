@@ -75,9 +75,11 @@ public:
     Map();
     Map(int initKFid);
     ~Map();
+    //Extended
         std::vector<Anchor*> anchors;
         Anchor* createAnchor(Eigen::Vector3f* pos,Eigen::Matrix3f* orientation);
 	    std::vector<MapPoint*> selectReferences(Eigen::Vector3f* pos);
+    //End
 
     void AddKeyFrame(KeyFrame* pKF);
     void AddMapPoint(MapPoint* pMP);

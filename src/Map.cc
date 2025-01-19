@@ -25,7 +25,7 @@ namespace ORB_SLAM3
 {
 
 long unsigned int Map::nNextId=0;
-
+//Ext
 Anchor* Map::createAnchor(Eigen::Vector3f* pos,Eigen::Matrix3f* orientation){
     Anchor* anchor=new Anchor();
     anchor->pos=*pos;
@@ -47,6 +47,7 @@ std::vector<MapPoint*> Map::selectReferences(Eigen::Vector3f* pos){
   return v;
 }
 
+//end
 Map::Map():mnMaxKFid(0),mnBigChangeIdx(0), mbImuInitialized(false), mnMapChange(0), mpFirstRegionKF(static_cast<KeyFrame*>(NULL)),
 mbFail(false), mIsInUse(false), mHasTumbnail(false), mbBad(false), mnMapChangeNotified(0), mbIsInertial(false), mbIMU_BA1(false), mbIMU_BA2(false)
 {
