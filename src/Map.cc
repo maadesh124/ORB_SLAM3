@@ -26,7 +26,7 @@ namespace ORB_SLAM3
 
 long unsigned int Map::nNextId=0;
 
-Anchor* Map::createAnchor(Eigen::Vector3f* pos,Eigen::Vector3f* orientation){
+Anchor* Map::createAnchor(Eigen::Vector3f* pos,Eigen::Matrix3f* orientation){
     Anchor* anchor=new Anchor();
     anchor->pos=*pos;
     anchor->ori=*orientation;

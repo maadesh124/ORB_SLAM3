@@ -191,7 +191,7 @@ std::cout << "k = " << k << std::endl;
                 if(k==5)
                 {
                 Eigen::Vector3f pos(1.0f, 2.0f, 3.0f);
-                Eigen::Vector3f ori(1.0f, 2.0f, 3.0f);
+                Eigen::Matrix3f ori=Eigen::Matrix3f::Identity();
 
               te= SLAM.getAtlas()->GetCurrentMap()->createAnchor(&pos,&ori);
                 
@@ -200,16 +200,20 @@ std::cout << "k = " << k << std::endl;
 
                 
                 if(k>6){
-                    te->update(mpid,pp);
+                    te->update1(mpid);
+                    //std::cout<<"matrix"<<te->computeAffineTransformation()<<std::endl;
                     
                 }
 
 
 
                                 if(k>5){
-                    pp=te->getRefPositions();
+                    te->prevRefPos=te->getRefPositions();
                     mpid=SLAM.getAtlas()->GetCurrentMap()->GetId();
                 }
+
+                if(k==100)
+                return 0;
 
                 
             

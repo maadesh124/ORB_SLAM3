@@ -76,7 +76,7 @@ public:
     Map(int initKFid);
     ~Map();
         std::vector<Anchor*> anchors;
-        Anchor* createAnchor(Eigen::Vector3f* pos,Eigen::Vector3f* orientation);
+        Anchor* createAnchor(Eigen::Vector3f* pos,Eigen::Matrix3f* orientation);
 	    std::vector<MapPoint*> selectReferences(Eigen::Vector3f* pos);
 
     void AddKeyFrame(KeyFrame* pKF);
