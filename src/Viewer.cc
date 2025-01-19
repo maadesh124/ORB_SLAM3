@@ -55,6 +55,13 @@ Viewer::Viewer(System* pSystem, FrameDrawer *pFrameDrawer, MapDrawer *pMapDrawer
     mbStopTrack = false;
 }
 
+
+//Ext
+
+
+//end
+
+
 void Viewer::newParameterLoader(Settings *settings) {
     mImageViewerScale = 1.f;
 
@@ -219,9 +226,11 @@ void Viewer::Run()
     float trackedImageScale = mpTracker->GetImageScale();
 
     cout << "Starting the Viewer" << endl;
+    
     while(1)
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
 
         mpMapDrawer->GetCurrentOpenGLCameraMatrix(Twc,Ow);
 
@@ -314,7 +323,8 @@ void Viewer::Run()
             mpMapDrawer->DrawKeyFrames(menuShowKeyFrames,menuShowGraph, menuShowInertialGraph, menuShowOptLba);
         if(menuShowPoints)
             mpMapDrawer->DrawMapPoints();
-
+        mpMapDrawer->DrawReferenceAxes();
+        mpMapDrawer->DrawAnchors();
         pangolin::FinishFrame();
 
         cv::Mat toShow;

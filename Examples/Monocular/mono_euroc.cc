@@ -212,8 +212,8 @@ std::cout << "k = " << k << std::endl;
                 //     mpid=SLAM.getAtlas()->GetCurrentMap()->GetId();
                 // }
 
-                if(k==100)
-                return 0;
+                // if(k==100)
+                // return 0;
 
                 
             

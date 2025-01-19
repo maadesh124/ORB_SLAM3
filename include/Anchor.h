@@ -25,7 +25,7 @@ std::vector<Eigen::Vector3f> getRefPositions();
 //how much each position vector aligns with three orientation vectors defines the 
 //orientation relationship between a reference point and anchor.
 //this alignment(varies from 0 to 1) is given by dot product when both vector is unity.
-//alignment=ori(unit vector)*pos(unit vector);this alignment vector is 3x1 vector with
+//alignment=ori(unit vector)*(anchor pos-ref pos)(unit vector);this alignment vector is 3x1 vector with
 //each row indicating ref point's alignment with x,y and z axis.
 //during next frame processing references move.So anchors orientation must be such that 
 //squared alignment error is minimum.alignent error =sum of ||cur alignment - prev alignment||

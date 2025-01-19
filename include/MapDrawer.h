@@ -43,6 +43,8 @@ public:
 
     Atlas* mpAtlas;
 
+    void DrawReferenceAxes();
+    void DrawAnchors();
     void DrawMapPoints();
     void DrawKeyFrames(const bool bDrawKF, const bool bDrawGraph, const bool bDrawInertialGraph, const bool bDrawOptLba);
     void DrawCurrentCamera(pangolin::OpenGlMatrix &Twc);

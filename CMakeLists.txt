@@ -53,7 +53,9 @@ ${Pangolin_INCLUDE_DIRS}
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 
-add_library(${PROJECT_NAME} SHARED src/Anchor.cc
+add_library(${PROJECT_NAME} SHARED src/Viewer.cc
+src/MapDrawer.cc
+src/Anchor.cc
 src/System.cc
 src/Atlas.cc
 src/Map.cc
@@ -66,12 +68,10 @@ src/FrameDrawer.cc
 src/Converter.cc
 src/MapPoint.cc
 src/KeyFrame.cc
-src/MapDrawer.cc
 src/Optimizer.cc
 src/Frame.cc
 src/KeyFrameDatabase.cc
 src/Sim3Solver.cc
-src/Viewer.cc
 src/ImuTypes.cc
 src/G2oTypes.cc
 src/CameraModels/Pinhole.cpp
@@ -82,6 +82,8 @@ src/GeometricTools.cc
 src/TwoViewReconstruction.cc
 src/Config.cc
 src/Settings.cc
+include/Viewer.h
+include/MapDrawer.h
 include/Anchor.h
 include/Atlas.h
 include/Map.h
@@ -95,12 +97,10 @@ include/FrameDrawer.h
 include/Converter.h
 include/MapPoint.h
 include/KeyFrame.h
-include/MapDrawer.h
 include/Optimizer.h
 include/Frame.h
 include/KeyFrameDatabase.h
 include/Sim3Solver.h
-include/Viewer.h
 include/ImuTypes.h
 include/G2oTypes.h
 include/CameraModels/GeometricCamera.h

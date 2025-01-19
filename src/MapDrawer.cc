@@ -50,6 +50,79 @@ MapDrawer::MapDrawer(Atlas* pAtlas, const string &strSettingPath, Settings* sett
     }
 }
 
+    void MapDrawer::DrawReferenceAxes()
+    {
+
+
+        glPushMatrix();
+
+        // Draw X axis (Red)
+        glLineWidth(3.0f); 
+        glColor3f(1.0, 0.0, 0.0); // Red
+        glBegin(GL_LINES);
+        glVertex3f(0.0, 0.0, 0.0); // Origin
+        glVertex3f(1.0, 0.0, 0.0); // X axis end
+        glEnd();
+
+        // Draw Y axis (Green)
+        glLineWidth(3.0f); 
+        glColor3f(0.0, 1.0, 0.0); // Green
+        glBegin(GL_LINES);
+        glVertex3f(0.0, 0.0, 0.0); // Origin
+        glVertex3f(0.0, 1.0, 0.0); // Y axis end
+        glEnd();
+
+        // Draw Z axis (Blue)
+        glLineWidth(3.0f); 
+        glColor3f(0.0, 0.0, 1.0); // Blue
+        glBegin(GL_LINES);
+        glVertex3f(0.0, 0.0, 0.0); // Origin
+        glVertex3f(0.0, 0.0, 1.0); // Z axis end
+        glEnd();
+
+        glPopMatrix();
+
+          // Set flag to indicate axes have been drawn
+    }
+
+
+
+void MapDrawer::DrawAnchors()
+{
+    Map* curMap=mpAtlas->GetCurrentMap();
+    for(Anchor* anchor:curMap->anchors)
+    {
+    glLineWidth(2.0f); // Set the line width
+    glColor3f(1.0, 0.0, 0.0); // Set the vector color (green in this case)
+    glBegin(GL_LINES);
+    glVertex3f(anchor->pos[0],anchor->pos[1],anchor->pos[2] ); // Start point
+    Eigen::Vector3f endPoint=anchor->pos + anchor->ori.row(0).transpose();//=anchor->pos+ anchor->ori.row(0);
+    glVertex3f(endPoint[0], endPoint[1], endPoint[2]);       // End point
+    glEnd();
+
+
+    glLineWidth(2.0f); // Set the line width
+    glColor3f(0.0, 1.0, 0.0); // Set the vector color (green in this case)
+    glBegin(GL_LINES);
+    glVertex3f(anchor->pos[0],anchor->pos[1],anchor->pos[2] ); // Start point
+    endPoint=anchor->pos + anchor->ori.row(1).transpose();//=anchor->pos+ anchor->ori.row(0);
+    glVertex3f(endPoint[0], endPoint[1], endPoint[2]);       // End point
+    glEnd();
+
+
+    glLineWidth(2.0f); // Set the line width
+    glColor3f(0.0, 0.0, 1.0); // Set the vector color (green in this case)
+    glBegin(GL_LINES);
+    glVertex3f(anchor->pos[0],anchor->pos[1],anchor->pos[2] ); // Start point
+    endPoint=anchor->pos + anchor->ori.row(2).transpose();//=anchor->pos+ anchor->ori.row(0);
+    glVertex3f(endPoint[0], endPoint[1], endPoint[2]);       // End point
+    glEnd();
+
+
+    }
+}
+
+
 void MapDrawer::newParameterLoader(Settings *settings) {
     mKeyFrameSize = settings->keyFrameSize();
     mKeyFrameLineWidth = settings->keyFrameLineWidth();

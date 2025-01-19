@@ -73,8 +73,7 @@ return this->pos;
 if(this->prevRefPos.size()!=this->refs.size())
 std::cerr<<"No. of refs varies"<<endl;
 
-std::vector<Eigen::Vector3f> alignment;
-std::vector<Eigen::Vector3f> curPos;
+
 
 int i=0;
 double wi=1,swi=0;
@@ -86,15 +85,26 @@ for(Eigen::Vector3f pp:this->prevRefPos){
     c=c+(wi*ci);
     swi=swi+wi;
 
-    alignment.push_back(this->ori*pp.normalized());
-    curPos.push_back(this->refs.at(i)->GetWorldPos().normalized());
-
     i++;
 
 
 }
-Eigen::Matrix3f R=solveOrthogonalProcrustes(curPos,alignment);
 this->pos=-1*c/swi;
+
+
+
+
+std::vector<Eigen::Vector3f> alignment;
+std::vector<Eigen::Vector3f> curPos;
+i=0;
+for(Eigen::Vector3f pp:this->prevRefPos){
+    alignment.push_back(this->ori*(this->pos-pp).normalized());
+    curPos.push_back((this->pos-this->refs.at(i)->GetWorldPos()).normalized());
+    i++;
+}
+
+Eigen::Matrix3f R=solveOrthogonalProcrustes(curPos,alignment);
+
 std::cout<<"Old R"<<this->ori<<std::endl;
 std::cout<<"Solved"<<R<<std::endl;
 this->ori.row(0)=R.row(0).normalized();
