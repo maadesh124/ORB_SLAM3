@@ -41,9 +41,9 @@ Anchor* Map::createAnchor(Eigen::Vector3f* pos,Eigen::Matrix3f* orientation){
 }
 
 std::vector<MapPoint*> Map::selectReferences(Eigen::Vector3f* pos){
-  std::vector<MapPoint*> v=  this->GetAllMapPoints();
-  if(v.size()>5)
-  v.resize(5);
+  std::vector<MapPoint*> v=  this->GetReferenceMapPoints();
+  if(0.1*v.size()>20 )
+  v.resize(0.1*v.size());
   return v;
 }
 
